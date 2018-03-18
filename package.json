@@ -9,6 +9,8 @@
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.16.3",
+    "helmet": "^3.12.0",
     "three": "^0.91.0",
     "webpack": "^4.1.1"
   }

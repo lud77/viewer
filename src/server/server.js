@@ -1,6 +1,10 @@
 const express = require('express');
 
+const viewerControllerFactory = require('../controllers/viewer');
+
 const app = express();
+
+const { viewer } = viewerControllerFactory();
 
 app.disable('etag');
 

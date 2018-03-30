@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/server/index",
+    "dev": "webpack ./src/client/main --mode development",
+    "build": "webpack ./src/client/main --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
@@ -19,6 +21,11 @@
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
-    "webpack": "^4.4.1"
+    "css-loader": "^0.28.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.1.0",
+    "mini-css-extract-plugin": "^0.4.0",
+    "webpack": "^4.4.1",
+    "webpack-cli": "^2.0.13"
   }
 }

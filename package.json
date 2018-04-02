@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/server/index",
-    "dev": "webpack ./src/client/main --mode development",
-    "build": "webpack ./src/client/main --mode production",
+    "dev": "npm run build:css && webpack ./src/client/main --mode development",
+    "build:css": "cleancss ./src/client/main.css -o ./dist/main.css",
+    "build": "npm run build:css && webpack ./src/client/main --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",
@@ -14,7 +15,8 @@
   "dependencies": {
     "express": "^4.16.3",
     "helmet": "^3.12.0",
-    "three": "^0.91.0"
+    "three": "^0.91.0",
+    "three-orbit-controls": "^82.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

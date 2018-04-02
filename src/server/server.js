@@ -9,7 +9,8 @@ const app = express();
 
 app.disable('etag');
 
-app.use('/', express.static(path.join(__dirname, '../../dist')))
+app.use('/', express.static(path.join(__dirname, '../../dist')));
+app.use('/assets', express.static(path.join(__dirname, '../../assets')));
 
 //app.get('/', viewer);
 

@@ -1,42 +1,32 @@
-const path = require('path');
 const THREE = require('three');
 const OrbitControls = require('three-orbit-controls')(THREE);
 
 const browser = require('./browser');
 
-module.exports = (skybox) => {
-    const container = document.createElement('div');
-	  document.body.appendChild(container);
-
+module.exports = () => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
-    const controls = OrbitControls(camera);
+    const controls = new OrbitControls(camera, renderer.domElement);
 
     const objects = {};
 
     const add = (id, obj) => {
         objects[id] = { obj };
         scene.add(obj);
-
-        if (obj.type === 'PerspectiveCamera') animate();
     };
 
     const get = (id) => objects[id];
 
-    const loadSkybox = (skybox) => new THREE.CubeTextureLoader().load([
-        path.join(skybox, `front.jpg`),
-        path.join(skybox, `back.jpg`),
-        path.join(skybox, `top.jpg`),
-        path.join(skybox, `bottom.jpg`),
-        path.join(skybox, `left.jpg`),
-        path.join(skybox, `right.jpg`)
-    ]);
+    const setBackground = (background) => {
+        scene.background = background;
+    };
 
     const updateFrame = () => {};
 
-    const animate = () => {
-        requestAnimationFrame(animate);
+    const render = () => {
+        requestAnimationFrame(render);
+        controls.update();
         updateFrame();
         renderer.render(scene, camera);
     };
@@ -50,17 +40,17 @@ module.exports = (skybox) => {
         renderer.setSize(w, h);
     };
 
+    document.body.appendChild(renderer.domElement);
+
     window.addEventListener('resize', handleResize, false);
     handleResize();
 
-    container.appendChild(renderer.domElement);
-
-    const textureCube = loadSkybox(skybox);
-    textureCube.mapping = THREE.CubeRefractionMapping;
-
-    scene.background = textureCube;
-
     add('camera', camera);
 
-    return { add, get };
+    camera.position.set(0, 5, 5);
+    controls.update();
+
+    render();
+
+    return { add, get, setBackground };
 };

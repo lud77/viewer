@@ -22,6 +22,10 @@ module.exports = () => {
         scene.background = background;
     };
 
+    const setFog = (fog) => {
+        scene.fog = fog;
+    };
+
     const updateFrame = () => {};
 
     const render = () => {
@@ -47,10 +51,10 @@ module.exports = () => {
 
     add('camera', camera);
 
-    camera.position.set(0, 5, 5);
+    camera.position.set(0, 5, 0);
     controls.update();
 
     render();
 
-    return { add, get, setBackground };
+    return { add, get, setBackground, setFog };
 };

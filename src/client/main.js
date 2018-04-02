@@ -14,7 +14,7 @@ const world = require('./world');
 browser.addEventListener('DOMContentLoaded', () => {
     browser.log('DOM Loaded');
 
-    const { add, get, setBackground } = world();
+    const { add, get, setBackground, setFog } = world();
 
     add(
         'cubetto',
@@ -24,7 +24,15 @@ browser.addEventListener('DOMContentLoaded', () => {
         )
     );
 
-    //const textureCube = loadSkybox('/assets/skyboxes/day');
+    add('ambient-light', new THREE.AmbientLight(0x222222));
+
+    const sun = new THREE.DirectionalLight(0xffffff);
+    sun.position.set(-2000, 2000, -2000);
+
+    add('sun-light', sun);
+
+    const textureCube = loadSkybox('/assets/skyboxes/day');
     //setBackground(textureCube);
     setBackground(new THREE.Color(0x000000));
+    setFog(new THREE.FogExp2(0xcccccc, 0.002));
 });

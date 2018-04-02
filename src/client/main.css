@@ -1,3 +1,7 @@
-body {
-    font-size: 10px;
+@import './reset.css';
+
+html, body, div, canvas {
+    margin: 0px !important;
+    padding: 0px !important;
+    overflow: hidden !important;
 }

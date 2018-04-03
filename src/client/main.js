@@ -11,11 +11,7 @@ browser.log('Start-up');
 
 const world = require('./world');
 
-browser.addEventListener('DOMContentLoaded', () => {
-    browser.log('DOM Loaded');
-
-    const { add, get, setBackground, setFog } = world();
-
+const buildScene = ({ add, get, setBackground, setFog }) => {
     add(
         'cubetto',
         new THREE.Mesh(
@@ -31,8 +27,28 @@ browser.addEventListener('DOMContentLoaded', () => {
 
     add('sun-light', sun);
 
+/*
+    const ground = new THREE.PlaneGeometry(100000, 100000);
+
+    //ground.rotation.x = -Math.PI / 2;
+
+    ground.traverse((obj) => {
+        obj.castShadow = true;
+        obj.receiveShadow = true;
+    });
+
+    add('ground', ground);
+*/
     const textureCube = loadSkybox('/assets/skyboxes/day');
-    //setBackground(textureCube);
-    setBackground(new THREE.Color(0x000000));
+    setBackground(textureCube);
+    //setBackground(new THREE.Color(0x000000));
     setFog(new THREE.FogExp2(0xcccccc, 0.002));
+};
+
+browser.addEventListener('DOMContentLoaded', () => {
+    browser.log('DOM Loaded');
+
+    const stage = world();
+
+    buildScene(stage);
 });

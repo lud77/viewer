@@ -1,8 +1,8 @@
 const THREE = require('three');
+const axios = require('axios');
 
 const browser = require('./browser');
 const world = require('./world');
-
 const { normalMaterials } = require('./materials');
 const { loadSkybox } = require('./skybox');
 
@@ -11,13 +11,28 @@ const { redRough } = normalMaterials();
 browser.log('Start-up');
 
 const buildScene = ({ add, get, setBackground, setFog }) => {
-    add(
-        'cubetto',
-        new THREE.Mesh(
-            new THREE.BoxGeometry(1, 2, 1),
-            new THREE.MeshLambertMaterial({ color: 0xff0000, opacity: 1, transparent: false })
-        )
-    );
+    axios.get('http://localhost:2327/map')
+        .then((res) => {
+            console.log(res);
+            const maze = res.data.split('\n');
+            const width = maze.length;
+            const height = maze[0].length;
+            for (let i = 0; i < width; i++) {
+                for (let j = 0; j < height; j++)  {
+                    if (maze[i][j] === 'X') add(
+                        `c${i}${j}`,
+                        new THREE.Mesh(
+                            new THREE.BoxGeometry(1, 1, 1),
+                            new THREE.MeshLambertMaterial({ color: 0xff0000, opacity: 1, transparent: false })
+                        ),
+                        new THREE.Vector3(i - width / 2, 0, j - height / 2)
+                    );
+                }
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
 
     add('ambient-light', new THREE.AmbientLight(0x222222));
 

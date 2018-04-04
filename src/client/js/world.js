@@ -15,10 +15,30 @@ module.exports = () => {
 
     const objects = [];
 
-    const add = (id, obj) => {
+    const add = (id, obj, position) => {
         obj.name = id;
         objects.push({ id, obj });
+
+        if (position != null) {
+            obj.position.x = position.x;
+            obj.position.y = position.y;
+            obj.position.z = position.z;
+        }
         scene.add(obj);
+    };
+
+    const move = (id, position) => {
+        const obj = get(id);
+        obj.position.x = position.x;
+        obj.position.y = position.y;
+        obj.position.z = position.z;
+    };
+
+    const moveBy = (id, position) => {
+        const obj = get(id);
+        obj.position.x = position.x;
+        obj.position.y = position.y;
+        obj.position.z = position.z;
     };
 
     const get = (id) => objects.find((el) => el.id === id);
@@ -76,10 +96,17 @@ module.exports = () => {
 
     add('camera', camera);
 
-    camera.position.set(0, 5, 0);
+    camera.position.set(0, 15, 0);
     controls.update();
 
     render();
 
-    return { add, get, setBackground, setFog };
+    return {
+        add,
+        get,
+        setBackground,
+        setFog,
+        move,
+        moveBy
+    };
 };

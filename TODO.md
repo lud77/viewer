@@ -1,0 +1,6 @@
+- [ ] Implement selectors
+- [ ] Add different geometries (sphere, cylinder, point cloud)
+- [ ] Positioning of elements
+- [ ] Containers
+- [ ] Dynamic layouts
+- [ ] Controls

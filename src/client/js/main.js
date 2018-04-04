@@ -1,15 +1,14 @@
 const THREE = require('three');
 
 const browser = require('./browser');
+const world = require('./world');
 
 const { normalMaterials } = require('./materials');
-const { loadSkybox } = require('./utils');
+const { loadSkybox } = require('./skybox');
 
 const { redRough } = normalMaterials();
 
 browser.log('Start-up');
-
-const world = require('./world');
 
 const buildScene = ({ add, get, setBackground, setFog }) => {
     add(
@@ -47,8 +46,6 @@ const buildScene = ({ add, get, setBackground, setFog }) => {
 
 browser.addEventListener('DOMContentLoaded', () => {
     browser.log('DOM Loaded');
-
     const stage = world();
-
     buildScene(stage);
 });

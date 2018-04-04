@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/server/index",
-    "dev": "npm run build:css && webpack ./src/client/main --mode development",
-    "build:css": "cleancss ./src/client/main.css -o ./dist/main.css",
-    "build": "npm run build:css && webpack ./src/client/main --mode production",
+    "dev": "npm run build:css && webpack ./src/client/js/main --mode development",
+    "build:css": "cleancss ./src/client/css/main.css -o ./dist/main.css",
+    "build": "npm run build:css && webpack ./src/client/js/main --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stefano Butera <stefano.butera@nethnic.com> (https://github.com/lud77)",

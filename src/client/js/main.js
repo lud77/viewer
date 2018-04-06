@@ -3,27 +3,26 @@ const axios = require('axios');
 
 const browser = require('./browser');
 const world = require('./world');
-const { normalMaterials } = require('./materials');
+const { normalMaterials, reflectiveMaterials } = require('./materials');
 const { loadSkybox } = require('./skybox');
 
-const { redRough } = normalMaterials();
+const { redRough, grayShiny } = normalMaterials();
 
 browser.log('Start-up');
 
-const buildScene = ({ add, get, setBackground, setFog }) => {
+const buildScene = ({ add, get, setBackground, setFog }, textureCube, refMats) => {
     axios.get('http://localhost:2327/map')
         .then((res) => {
-            console.log(res);
             const maze = res.data.split('\n');
             const width = maze.length;
             const height = maze[0].length;
             for (let i = 0; i < width; i++) {
                 for (let j = 0; j < height; j++)  {
                     if (maze[i][j] === 'X') add(
-                        `c${i}${j}`,
+                        `c${i}-${j}`,
                         new THREE.Mesh(
                             new THREE.BoxGeometry(1, 1, 1),
-                            new THREE.MeshLambertMaterial({ color: 0xff0000, opacity: 1, transparent: false })
+                            refMats.pureChrome
                         ),
                         new THREE.Vector3(i - width / 2, 0, j - height / 2)
                     );
@@ -53,14 +52,18 @@ const buildScene = ({ add, get, setBackground, setFog }) => {
 
     add('ground', ground);
 */
-    const textureCube = loadSkybox('/assets/skyboxes/day');
     setBackground(textureCube);
     //setBackground(new THREE.Color(0x000000));
+
+
+
     setFog(new THREE.FogExp2(0xcccccc, 0.002));
 };
 
 browser.addEventListener('DOMContentLoaded', () => {
     browser.log('DOM Loaded');
+    const textureCube = loadSkybox('/assets/skyboxes/day');
+    const refMats = reflectiveMaterials(textureCube);
     const stage = world();
-    buildScene(stage);
+    buildScene(stage, textureCube, refMats);
 });

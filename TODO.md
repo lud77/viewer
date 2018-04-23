@@ -1,3 +1,4 @@
+- [ ] Remove skyboxes
 - [ ] Implement selectors
 - [ ] Add different geometries (sphere, cylinder, point cloud)
 - [x] Positioning of elements
